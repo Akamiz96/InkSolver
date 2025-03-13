@@ -13,7 +13,13 @@ El sistema se compone de cuatro módulos principales:
 1. **Segmentación de la Operación** → Separa la operación en tres imágenes: primer operando, operador matemático y segundo operando.  
 2. **Reconocimiento del Operador** → Identifica qué operación se debe aplicar (*+, -, ×, ÷*).  
 3. **Reconocimiento de los Operandos** → Interpreta los números manuscritos para convertirlos en valores numéricos.  
-4. **Cálculo del Resultado** → Aplica la operación matemática y devuelve el resultado.  
+4. **Cálculo del Resultado** → Aplica la operación matemática y devuelve el resultado.
+
+## 📊 Datos  
+Para el desarrollo de **Inksolver**, se utilizaron datos provenientes de conjuntos de datos públicos en Kaggle:  
+- **[Handwritten Digits (0-9)](https://www.kaggle.com/datasets/olafkrastovski/handwritten-digits-0-9)** → Utilizado para el reconocimiento de los operandos escritos a mano.  
+- **[Handwritten Math Expressions Dataset](https://www.kaggle.com/datasets/govindaramsriram/handwritten-math-expressions-dataset)** → Fuente de inspiración para el proyecto y referencia para la segmentación de expresiones matemáticas.  
+  
 
 ## 🛠️ Tecnologías Utilizadas  
 El proyecto está desarrollado en **Python** y utiliza las siguientes librerías:  
