@@ -65,8 +65,37 @@ Inksolver/
 │   │   ├── results.md    # Documento de resultados
 ```
 
-## 🚀 Instalación  
-Para instalar las dependencias del proyecto, ejecuta el siguiente comando:  
+## 🚀 Instalación
+  
+### 🏗️ Usando un Entorno Virtual (Opcional pero Recomendado)  
+Para evitar conflictos con otras dependencias de Python, puedes crear un entorno virtual para este proyecto siguiendo estos pasos:
+
+1. **Crear un entorno virtual**  
+   ```bash
+   python3 -m venv .venv
+   ```
+
+2. **Activar el entorno virtual**  
+   ```bash
+   source .venv/bin/activate
+   ```
+
+3. **Confirmar que el entorno virtual está activado**  
+   ```bash
+   which python
+   ```
+   Debería mostrar una ruta dentro de `.venv/`.
+
+4. **Desactivar el entorno virtual (cuando termines de usarlo)**  
+   ```bash
+   deactivate
+   ```
+
+🔗 Más detalles sobre entornos virtuales en Python:  
+[Python Packaging Guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/)
+
+### 📦 Instalación de Dependencias  
+Una vez activado el entorno virtual (o sin él si decides no usarlo), instala las dependencias necesarias con:
 
 ```bash
 pip install -r src/requirements.txt
