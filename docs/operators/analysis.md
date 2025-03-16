@@ -178,7 +178,83 @@ Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la c
 
 ### 📌 2. Rotación de 45 Grados + Nueva Proyección y Normalización  
 
-Para mejorar la identificación de ciertos operadores, se aplica una **rotación de 45 grados** antes de realizar nuevamente el cálculo de la proyección normalizada. Esto es particularmente útil en operadores como `×`, donde la estructura cruzada puede generar proyecciones similares a otros operadores en su forma original.
+Para mejorar la identificación de ciertos operadores, se aplica una **rotación de 45 grados** antes de realizar nuevamente el cálculo de la proyección normalizada. Esta técnica permite resaltar características clave que pueden ser difíciles de distinguir en la proyección estándar.
+
+A continuación, se presentan las proyecciones después de la rotación junto con un análisis de cada operador:
+
+#### ➗ Proyección del Operador `div` (División) después de la rotación  
+![Proyección Rotada - División](images/projection_rotated_div.png)
+
+**Análisis:**  
+- La imagen original muestra una línea diagonal (`/`), y al rotarla 45° se vuelve más vertical, lo que permite una mejor diferenciación en los ejes.
+- En la **proyección horizontal** (gráfico azul), se observa una mayor variabilidad debido a la inclinación del trazo.
+- En la **proyección vertical** (gráfico rojo), se generan picos más pronunciados, resaltando la estructura alargada de la línea.
+
+---
+
+#### 🔗 Proyección del Operador `equals` (Igual) después de la rotación  
+![Proyección Rotada - Igual](images/projection_rotated_equals.png)
+
+**Análisis:**  
+- La imagen original con dos líneas horizontales se transforma en dos líneas diagonales tras la rotación.
+- En la **proyección horizontal**, los valles característicos de la separación entre las líneas se vuelven más pronunciados.
+- En la **proyección vertical**, la densidad de píxeles cambia, pero la estructura de los dos trazos sigue siendo visible.
+
+---
+
+#### ➖ Proyección del Operador `sub` (Resta) después de la rotación  
+![Proyección Rotada - Resta](images/projection_rotated_sub.png)
+
+**Análisis:**  
+- Al rotar la línea horizontal (`-`) 45°, se inclina y su forma cambia drásticamente.
+- En la **proyección horizontal**, se observan cambios menos abruptos debido a la forma del operador.
+- En la **proyección vertical**, la estructura se mantiene con una franja de densidad central clara.
+
+---
+
+#### ➕ Proyección del Operador `sum` (Suma) después de la rotación  
+![Proyección Rotada - Suma](images/projection_rotated_sum.png)
+
+**Análisis:**  
+- La imagen del `+` se transforma en una `X` tras la rotación.
+- En la **proyección horizontal**, se observan caídas más pronunciadas debido a la intersección de las líneas.
+- En la **proyección vertical**, se generan múltiples valles, reflejando la estructura cruzada del operador.
+
+---
+
+#### ✖️ Proyección del Operador `times` (Multiplicación) después de la rotación  
+![Proyección Rotada - Multiplicación](images/projection_rotated_times.png)
+
+**Análisis:**  
+- La imagen original del `×` cambia su orientación tras la rotación de 45°.
+- En la **proyección horizontal**, la estructura se vuelve más simétrica.
+- En la **proyección vertical**, se observan picos bien definidos que corresponden a la intersección de las líneas diagonales.
+
+---
+
+### 🖥️ Código para la Generación de Proyecciones Rotadas  
+
+El código utilizado para generar estas proyecciones después de la rotación se encuentra en el archivo **`projection_rotated_operators.py`**, ubicado en la carpeta `src/operators/`. Este script permite calcular la proyección normalizada después de aplicar una rotación de 45 grados.
+
+Para ejecutar el script correctamente, sigue estos pasos:
+
+1. **Abrir una terminal** y navegar a la carpeta de los scripts con el siguiente comando:
+   ```bash
+   cd src/operators/
+   ```
+
+2. **Ejecutar el script con el intérprete de Python**:
+   ```bash
+   python projection_rotated_operators.py
+   ```
+
+Esto generará automáticamente las imágenes de proyección rotada en la carpeta de salida definida en el script.
+
+📌 **Nota:** Asegúrate de tener instaladas las dependencias necesarias ejecutando:
+```bash
+pip install -r src/requirements.txt
+```
+Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la carpeta `src/operators/`.
 
 ---
 
