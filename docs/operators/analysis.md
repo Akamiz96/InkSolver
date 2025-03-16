@@ -92,17 +92,101 @@ Si los scripts requieren modificaciones o ajustes en la visualización, puedes e
 ## 🤖 Método de Reconocimiento de Operadores
 El reconocimiento de operadores en **Inksolver** se basa en un análisis de proyecciones en diferentes ejes, lo que permite detectar los picos característicos en los histogramas normalizados. El proceso se lleva a cabo en los siguientes pasos:
 
-1. **Proyección en el eje horizontal y en el eje vertical**  
-   - Se calcula la distribución de los píxeles en cada uno de estos ejes.
+---
 
-2. **Rotación de 45 grados**  
-   - Para mejorar la diferenciación, especialmente en operadores como `×` (multiplicación), se realiza una rotación de 45 grados antes de aplicar una nueva proyección en el eje horizontal.
+### 📌 1. Proyección en los Ejes Horizontal y Vertical + Cálculo Normalizado  
 
-3. **Cálculo del histograma normalizado**  
-   - A partir de las proyecciones obtenidas, se genera un histograma normalizado que refleja los picos característicos de cada operador.
+Para analizar la estructura de los operadores, se genera una proyección de la imagen en los ejes **horizontal** y **vertical**. Esto permite visualizar la distribución de los píxeles y detectar patrones característicos en cada operador. La proyección se normaliza para mantener la escala uniforme y facilitar la comparación entre diferentes operadores.
 
-4. **Reglas de detección**  
-   - Basado en los picos del histograma y reglas predefinidas, se determina qué operador está presente en la imagen analizada.
+A continuación, se presentan las proyecciones de cada operador con su respectivo análisis:
+
+#### ➗ Proyección del Operador `div` (División)  
+![Proyección Normalizada - División](images/projection_div.png)
+
+**Análisis:**  
+- La imagen original muestra una línea diagonal, característica del operador `/`.
+- En la **proyección horizontal** (gráfico azul), se observa una fluctuación en la densidad de píxeles, con picos y valles que reflejan la inclinación de la línea.
+- La **proyección vertical** (gráfico rojo) tiene una caída pronunciada en el centro, indicando que la mayor parte de los píxeles están distribuidos en los extremos superior e inferior.
+
+---
+
+#### 🔗 Proyección del Operador `equals` (Igual)  
+![Proyección Normalizada - Igual](images/projection_equals.png)
+
+**Análisis:**  
+- La imagen original muestra dos líneas horizontales, características del operador `=`.
+- En la **proyección horizontal**, se pueden notar valles bien definidos que representan la separación entre ambas líneas.
+- En la **proyección vertical**, se observa una distribución más estable con menor variabilidad, indicando que la mayor parte de los píxeles están concentrados a lo largo del eje horizontal.
+
+---
+
+#### ➖ Proyección del Operador `sub` (Resta)  
+![Proyección Normalizada - Resta](images/projection_sub.png)
+
+**Análisis:**  
+- La imagen original muestra una única línea horizontal, representando el operador `-`.
+- En la **proyección horizontal**, se observa un valle pronunciado en la región donde se encuentra la línea.
+- La **proyección vertical** es prácticamente constante, ya que la mayor parte de los píxeles están concentrados en una única franja horizontal.
+
+---
+
+#### ➕ Proyección del Operador `sum` (Suma)  
+![Proyección Normalizada - Suma](images/projection_sum.png)
+
+**Análisis:**  
+- La imagen original muestra dos líneas perpendiculares que forman el símbolo `+`.
+- En la **proyección horizontal**, se observan dos valles bien definidos, correspondientes a la presencia de la línea vertical en el centro.
+- En la **proyección vertical**, se presentan dos caídas similares, reflejando la distribución de los píxeles en la línea horizontal.
+
+---
+
+#### ✖️ Proyección del Operador `times` (Multiplicación)  
+![Proyección Normalizada - Multiplicación](images/projection_times.png)
+
+**Análisis:**  
+- La imagen original muestra dos líneas diagonales cruzadas formando el operador `×`.
+- En la **proyección horizontal**, se observan múltiples variaciones, reflejando la intersección de ambas líneas.
+- En la **proyección vertical**, se aprecian picos irregulares, indicando la presencia de líneas diagonales en distintos puntos del eje.
+
+---
+
+### 🖥️ Código para la Generación de Proyecciones  
+
+El código utilizado para generar estas proyecciones se encuentra en el archivo **`projection_operators.py`**, ubicado en la carpeta `src/operators/`. Este script permite calcular las proyecciones horizontal y vertical de los operadores y normalizarlas para su análisis.
+
+Para ejecutar el script correctamente, sigue estos pasos:
+
+1. **Abrir una terminal** y navegar a la carpeta de los scripts con el siguiente comando:
+   ```bash
+   cd src/operators/
+   ```
+
+2. **Ejecutar el script con el intérprete de Python**:
+   ```bash
+   python projection_operators.py
+   ```
+
+Esto generará automáticamente las imágenes de proyección en la carpeta de salida definida en el script.
+
+📌 **Nota:** Asegúrate de tener instaladas las dependencias necesarias ejecutando:
+```bash
+pip install -r src/requirements.txt
+```
+Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la carpeta `src/operators/`.
+
+---
+
+### 📌 2. Rotación de 45 Grados + Nueva Proyección y Normalización  
+
+Para mejorar la identificación de ciertos operadores, se aplica una **rotación de 45 grados** antes de realizar nuevamente el cálculo de la proyección normalizada. Esto es particularmente útil en operadores como `×`, donde la estructura cruzada puede generar proyecciones similares a otros operadores en su forma original.
+
+---
+
+### 📌 3. Reglas de Detección  
+
+Con base en los patrones obtenidos de las proyecciones, se establecen **reglas de detección** que permiten identificar cada operador de manera precisa. Estas reglas se basan en la comparación de los valles y picos de las proyecciones, así como en la simetría y distribución de los píxeles.
+
+---
 
 ---
 
