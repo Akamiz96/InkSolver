@@ -93,8 +93,6 @@ for class_label, metrics in metrics_per_class.items():
       - 🔍 Recall: {metrics["Recall (%)"]:.2f}%
       - 🚀 Especificidad: {metrics["Especificidad (%)"]:.2f}%
       - ⚖️ F1-Score: {metrics["F1-Score (%)"]:.2f}%
-      📌 Un alto porcentaje sugiere que el modelo identifica bien esta operación.
-      📌 Un porcentaje bajo indica posibles confusiones con otras clases.
 """
 
 report_txt_path = os.path.join(output_dir, "classification_report.txt")
@@ -118,8 +116,6 @@ for class_label, metrics in metrics_per_class.items():
       - 🔍 Recall: \033[93m{metrics["Recall (%)"]:.2f}%\033[0m
       - 🚀 Especificidad: \033[93m{metrics["Especificidad (%)"]:.2f}%\033[0m
       - ⚖️ F1-Score: \033[93m{metrics["F1-Score (%)"]:.2f}%\033[0m
-      📌 Un alto porcentaje sugiere que el modelo identifica bien esta operación.
-      📌 Un porcentaje bajo indica posibles confusiones con otras clases.
 """
 
 print(report_text_terminal)

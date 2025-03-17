@@ -318,6 +318,101 @@ Estas reglas permiten diferenciar los operadores con un alto grado de precisión
 
 ---
 
+## 📊 Validación del Modelo  
+
+Para evaluar el desempeño del modelo basado en las reglas de detección establecidas, se utilizó la totalidad de las imágenes del conjunto de datos de operadores. Cada imagen fue procesada utilizando las reglas definidas previamente, generando una predicción sobre la categoría del operador detectado.  
+
+A partir de estas predicciones, se construyó la siguiente **matriz de confusión**, la cual proporciona una visión detallada del desempeño del modelo en términos de aciertos y errores por cada categoría de operador:
+
+![Matriz de Confusión](images/confusion_matrix.png)
+
+En esta matriz, las filas representan las **clases reales** de los operadores (etiquetas originales del conjunto de datos), mientras que las columnas representan las **predicciones realizadas por el modelo**. La diagonal principal indica el número de casos correctamente clasificados, mientras que los valores fuera de la diagonal representan errores de clasificación. Además, se incluyó una categoría **"Desconocido"**, la cual captura los casos en los que el modelo no pudo determinar con certeza el operador presente en la imagen.
+
+---
+
+### ✅ Precisión Global del Modelo  
+
+El modelo alcanzó una **precisión global del 71.74%**, lo que significa que, en promedio, **7 de cada 10 operadores fueron clasificados correctamente**.  
+
+Este resultado se calcula como la fracción de predicciones correctas sobre el total de muestras evaluadas. A pesar de tratarse de un método basado en reglas tradicionales sin el uso de técnicas avanzadas de inteligencia artificial, la precisión obtenida es competitiva y demuestra que el enfoque de análisis de proyección es efectivo para la clasificación de operadores matemáticos escritos a mano.
+
+---
+
+### 📊 Análisis de Precisión por Clase  
+
+Para comprender mejor el desempeño del modelo en cada operador, se presenta el siguiente análisis detallado de cada categoría evaluada en el conjunto de validación:
+
+#### 🔹 **División (`/`)**  
+- **Precisión:** 5.60%  
+- **Recall:** 82.91%  
+- **Especificidad:** 96.32%  
+- **F1-Score:** 10.50%  
+
+📌 **Interpretación:**  
+El modelo detecta correctamente la mayoría de los operadores `/` (alto recall), pero también los clasifica erróneamente en otras categorías (baja precisión). Esto puede deberse a la baja cantidad de muestras disponibles para este operador en el conjunto de datos, lo que dificulta la correcta identificación de patrones distintivos.
+
+---
+
+#### 🔹 **Igual (`=`)**  
+- **Precisión:** 67.15%  
+- **Recall:** 68.39%  
+- **Especificidad:** 92.99%  
+- **F1-Score:** 67.77%  
+
+📌 **Interpretación:**  
+El operador `=` presenta una clasificación razonablemente precisa, aunque con margen de mejora. El **recall del 68.39%** indica que casi **7 de cada 10 operadores `=` fueron correctamente identificados**, mientras que la precisión del **67.15%** muestra que aún existen algunas confusiones con otras categorías, principalmente `sub` y `sum`, cuyos histogramas pueden compartir ciertas características.
+
+---
+
+#### 🔹 **Resta (`-`)**  
+- **Precisión:** 90.10%  
+- **Recall:** 82.43%  
+- **Especificidad:** 92.61%  
+- **F1-Score:** 86.10%  
+
+📌 **Interpretación:**  
+El operador `-` fue identificado con alta precisión, logrando un **90.10%** de acierto en sus predicciones. Sin embargo, algunas muestras de `=` y `sum` fueron clasificadas erróneamente como `sub`, lo que afectó el **recall (82.43%)**. Esto sugiere que la estrategia de clasificación funciona bien para este operador, aunque con posibles mejoras en la diferenciación con `=`.
+
+---
+
+#### 🔹 **Suma (`+`)**  
+- **Precisión:** 99.67%  
+- **Recall:** 59.12%  
+- **Especificidad:** 99.90%  
+- **F1-Score:** 74.22%  
+
+📌 **Interpretación:**  
+La clasificación del operador `+` es **extremadamente precisa (99.67%)**, lo que significa que, cuando el modelo predice `sum`, casi siempre está en lo correcto. No obstante, el **recall del 59.12%** sugiere que muchas instancias de `sum` fueron clasificadas erróneamente como otros operadores, especialmente `equals` y `sub`. Esto se debe a la similitud en las proyecciones cuando las líneas no son perfectamente perpendiculares.
+
+---
+
+#### 🔹 **Multiplicación (`×`)**  
+- **Precisión:** 99.22%  
+- **Recall:** 70.19%  
+- **Especificidad:** 99.98%  
+- **F1-Score:** 82.22%  
+
+📌 **Interpretación:**  
+El modelo identifica el operador `×` con **alta precisión (99.22%)**, pero el **recall del 70.19%** indica que cerca del **30% de los operadores `×` fueron clasificados erróneamente**. La principal confusión ocurre con `sum`, ya que ambos presentan intersecciones en sus líneas. La rotación de 45° ayudó a mejorar la clasificación, pero sigue siendo un desafío distinguirlos en ciertos casos.
+
+---
+
+### 📌 Conclusiones de la Validación  
+
+1️⃣ **El modelo basado en reglas logró una precisión global del 71.74%**, lo que indica que es un método funcional y efectivo para reconocer operadores matemáticos escritos a mano sin el uso de inteligencia artificial.  
+
+2️⃣ **El operador con mejor rendimiento fue la resta (`-`), con un 90.10% de precisión**, seguido por la multiplicación (`×`) y la suma (`+`), que presentaron buenos niveles de especificidad y precisión.  
+
+3️⃣ **La división (`/`) tuvo el desempeño más bajo debido a la baja cantidad de muestras en el conjunto de datos**, lo que afectó su capacidad de generalización.  
+
+4️⃣ **La estrategia de rotación de 45° mejoró la detección del operador `×`, pero aún existen confusiones con `+` y `-`**, lo que sugiere que podrían implementarse mejoras en la discriminación entre estos símbolos.  
+
+5️⃣ **La clase "Desconocido" permitió capturar errores de predicción, pero su uso es limitado**, ya que en muchos casos el modelo clasifica erróneamente en otras categorías en lugar de asignar esta clase.  
+
+🔹 **En general, este análisis demuestra que la técnica de proyección y conteo de picos es efectiva para la clasificación de operadores matemáticos escritos a mano. Sin embargo, ciertas mejoras en las reglas de detección podrían optimizar aún más la precisión del modelo.**  
+
+---
+
 ## 📌 Conclusiones del Análisis
 - La detección de operadores mediante análisis de proyecciones e histogramas normalizados ha demostrado ser una solución eficiente y funcional.
 - La técnica de rotación de 45 grados mejoró significativamente la detección del operador de multiplicación (`×`).
