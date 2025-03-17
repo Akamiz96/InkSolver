@@ -269,6 +269,34 @@ La siguiente imagen resume el proceso realizado sobre los operadores, desde su i
 
 En este análisis, se observan diferencias significativas en la cantidad de picos generados en las proyecciones horizontal y vertical, tanto en la imagen original como en la rotada. Estas diferencias pueden aprovecharse para desarrollar un criterio sistemático de clasificación.
 
+---
+
+#### 🖥️ Código para la Generación del Resumen de Proyecciones  
+
+El código utilizado para generar esta imagen se encuentra en el archivo **`projection_rotated_cropped_operators.py`**, ubicado en la carpeta `src/operators/`. Este script permite visualizar el resumen de todo el proceso aplicado a los operadores.
+
+Para ejecutar el script correctamente, sigue estos pasos:
+
+1. **Abrir una terminal** y navegar a la carpeta de los scripts con el siguiente comando:
+   ```bash
+   cd src/operators/
+   ```
+
+2. **Ejecutar el script con el intérprete de Python**:
+   ```bash
+   python projection_rotated_cropped_operators.py
+   ```
+
+Esto generará automáticamente la imagen de resumen en la carpeta de salida definida en el script.
+
+📌 **Nota:** Asegúrate de tener instaladas las dependencias necesarias ejecutando:
+```bash
+pip install -r src/requirements.txt
+```
+Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la carpeta `src/operators/`.
+
+---
+
 #### 📊 Estrategia de Clasificación  
 Para la detección del operador, se ha definido un método basado en el conteo de picos en las proyecciones. El proceso se divide en dos pasos:
 
