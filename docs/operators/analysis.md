@@ -260,9 +260,33 @@ Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la c
 
 ### 📌 3. Reglas de Detección  
 
-Con base en los patrones obtenidos de las proyecciones, se establecen **reglas de detección** que permiten identificar cada operador de manera precisa. Estas reglas se basan en la comparación de los valles y picos de las proyecciones, así como en la simetría y distribución de los píxeles.
+A partir del análisis completo de las proyecciones originales y rotadas, se han identificado patrones consistentes en la cantidad de picos detectados en las gráficas. Estos patrones permiten establecer reglas para clasificar de manera precisa cada operador matemático.
 
----
+#### 🔍 Análisis General de las Proyecciones  
+La siguiente imagen resume el proceso realizado sobre los operadores, desde su imagen original hasta la proyección rotada, permitiendo visualizar las diferencias clave entre cada uno:
+
+![Resumen del Proceso de Proyección](images/projection_rotated_cropped.png)
+
+En este análisis, se observan diferencias significativas en la cantidad de picos generados en las proyecciones horizontal y vertical, tanto en la imagen original como en la rotada. Estas diferencias pueden aprovecharse para desarrollar un criterio sistemático de clasificación.
+
+#### 📊 Estrategia de Clasificación  
+Para la detección del operador, se ha definido un método basado en el conteo de picos en las proyecciones. El proceso se divide en dos pasos:
+
+1. **Cálculo de la cantidad de picos en cada proyección**  
+   - Se analiza la proyección horizontal y vertical de la imagen original.
+   - Se realiza la misma evaluación sobre la imagen rotada 45°.
+   - Para contar un pico, se considera que un punto es válido si sobrepasa un umbral predefinido y posteriormente regresa a un valor inferior.
+
+2. **Aplicación de reglas de clasificación**  
+   - A partir de los valores obtenidos, se establecen reglas que permiten identificar cada operador con base en la cantidad y distribución de picos.
+   - Cada operador presenta un comportamiento único:
+     - **División (`/`)**: No presenta picos en la imagen original, pero puede tener más de dos en la imagen rotada.
+     - **Igual (`=`)**: Presenta exactamente dos picos en la proyección horizontal y ninguno en la vertical.
+     - **Resta (`-`)**: Se detecta un único pico en la proyección horizontal y ninguno en la vertical.
+     - **Suma (`+`)**: Se identifican un pico en la proyección horizontal y otro en la vertical.
+     - **Multiplicación (`×`)**: No tiene picos en la imagen original, pero la imagen rotada genera hasta dos picos.
+
+Estas reglas permiten diferenciar los operadores con un alto grado de precisión, utilizando únicamente técnicas tradicionales de procesamiento de imágenes y análisis de histogramas de proyección. 
 
 ---
 
