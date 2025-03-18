@@ -39,9 +39,9 @@ output_folder = "test_validation"  # Carpeta para guardar los resultados
 os.makedirs(output_folder, exist_ok=True)
 
 # Definir rutas de salida para los archivos generados
-conf_matrix_img_path = os.path.join(output_folder, "confusion_matrix.png")
-conf_matrix_csv_path = os.path.join(output_folder, "confusion_matrix.csv")
-report_txt_path = os.path.join(output_folder, "classification_report.txt")
+conf_matrix_img_path = os.path.join(output_folder, "confusion_matrix_test.png")
+conf_matrix_csv_path = os.path.join(output_folder, "confusion_matrix_test.csv")
+report_txt_path = os.path.join(output_folder, "classification_report_test.txt")
 
 # Cargar el archivo CSV con los resultados de la clasificación de prueba
 print("\n\033[91m🔴 Cargando datos desde el archivo de clasificación de prueba...\033[0m")
