@@ -413,6 +413,41 @@ El modelo identifica el operador `×` con **alta precisión (99.22%)**, pero el 
 
 ---
 
+
+### 🖥️ Código para la Clasificación y Validación  
+
+El código utilizado para generar las predicciones y validar el desempeño del modelo se encuentra en la carpeta **`src/operators/`** y está dividido en dos scripts principales:
+
+- **`operator_classification.py`**: Se encarga de aplicar las reglas de clasificación definidas en la sección anterior a cada imagen del conjunto de datos y generar las predicciones de los operadores.
+- **`validate_classification.py`**: Utiliza las predicciones generadas para construir la matriz de confusión y calcular métricas de desempeño como precisión, recall, especificidad y F1-score.
+
+Para ejecutar el proceso de clasificación y validación correctamente, sigue estos pasos:
+
+1. **Abrir una terminal** y navegar a la carpeta de los scripts con el siguiente comando:
+   ```bash
+   cd src/operators/
+   ```
+
+2. **Ejecutar el script de clasificación para obtener las predicciones**:
+   ```bash
+   python operator_classification.py
+   ```
+   Este script generará un archivo con las predicciones realizadas por el modelo para cada imagen.
+
+3. **Ejecutar el script de validación para analizar los resultados**:
+   ```bash
+   python validate_classification.py
+   ```
+   Esto generará la **matriz de confusión** y calculará las métricas de validación, generando la imagen `confusion_matrix.png`.
+
+📌 **Nota:** Asegúrate de tener instaladas las dependencias necesarias ejecutando:
+```bash
+pip install -r src/requirements.txt
+```
+Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la carpeta `src/operators/`.
+
+---
+
 ## 📌 Conclusiones del Análisis
 - La detección de operadores mediante análisis de proyecciones e histogramas normalizados ha demostrado ser una solución eficiente y funcional.
 - La técnica de rotación de 45 grados mejoró significativamente la detección del operador de multiplicación (`×`).
