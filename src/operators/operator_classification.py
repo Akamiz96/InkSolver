@@ -150,5 +150,70 @@ def classify_operation(horizontal_peaks, vertical_peaks, horizontal_peaks_rot):
     else:
         return "Desconocido"
 
-if __name__ == "__main__":
-    print("\033[92m✅ SCRIPT PREPARADO PARA EJECUCION\033[0m")
+# Crear archivo CSV con encabezados antes de procesar los datos
+df_columns = ["Categoria", "Nombre_Imagen", "Picos_Horizontal_Original", "Picos_Vertical_Original", "Picos_Horizontal_Rotado", "Prediccion"]
+pd.DataFrame(columns=df_columns).to_csv(csv_path, index=False)
+
+# Procesar imágenes en bloques
+for category in operation_categories:
+    image_paths = load_image_paths(category)
+    
+    if not image_paths:
+        continue
+
+    total_images = len(image_paths)
+    print(f"\033[94mProcesando {total_images} imágenes de la categoría '{category}'...\033[0m")
+
+    # Procesar en bloques
+    for i in range(0, total_images, BLOCK_SIZE):
+        batch_paths = image_paths[i:i + BLOCK_SIZE]
+        batch_data = []
+
+        for img_path in batch_paths:
+            img_file = os.path.basename(img_path)
+            img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+
+            if img is None:
+                continue  # Saltar imágenes corruptas
+
+            # Obtener histogramas de la imagen original
+            hist_horizontal = compute_projection_histogram(img, axis=1)
+            hist_vertical = compute_projection_histogram(img, axis=0)
+            
+            # Contar picos en la imagen original
+            horizontal_peaks = count_peaks(hist_horizontal, threshold=0.8)
+            vertical_peaks = count_peaks(hist_vertical, threshold=0.8)
+
+            # Rotar la imagen 45 grados
+            rotated_img = rotate_image_45(img)
+
+            # Obtener histogramas de la imagen rotada
+            hist_horizontal_rot = compute_projection_histogram(rotated_img, axis=1)
+            
+            # Contar picos en la imagen rotada
+            horizontal_peaks_rot = count_peaks(hist_horizontal_rot, threshold=0.8)
+
+            # Clasificar la operación
+            prediction = classify_operation(horizontal_peaks, vertical_peaks, horizontal_peaks_rot)
+
+            # Almacenar en lista de datos
+            batch_data.append({
+                "Categoria": category,
+                "Nombre_Imagen": img_file,
+                "Picos_Horizontal_Original": horizontal_peaks,
+                "Picos_Vertical_Original": vertical_peaks,
+                "Picos_Horizontal_Rotado": horizontal_peaks_rot,
+                "Prediccion": prediction
+            })
+
+        # Guardar bloque en el CSV
+        df_batch = pd.DataFrame(batch_data)
+        df_batch.to_csv(csv_path, mode="a", header=False, index=False)
+
+        print(f"\033[92m✔ {min(i + BLOCK_SIZE, total_images)}/{total_images} imágenes procesadas...\033[0m")
+
+# Mensajes finales
+print("\n\033[92m" + "=" * 50)
+print("✅ PROCESO FINALIZADO: RESULTADOS GUARDADOS")
+print("=" * 50 + "\033[0m")
+print(f"\033[93m📂 Archivo CSV guardado en: {csv_path}\033[0m")

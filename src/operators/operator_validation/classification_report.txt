@@ -1,44 +1,34 @@
-
 📊 VALIDACIÓN DEL PROCESO DE CLASIFICACIÓN 📊
 
-✅ 1. Precisión Global del Modelo:
-   📌 El modelo logró una precisión global del 71.74%.
-   📌 Representa el porcentaje de predicciones correctas sobre el total de clasificaciones.
+✅ Precisión Global del Modelo: 67.96%
 
-📊 2. Precisión por Clase:
+🔹 Clase 'Desconocido':
+   🎯 Precisión: 0.00%
+   🔍 Recall: 0.00%
+   🚀 Especificidad: 81.28%
+   ⚖️ F1-Score: 0.00%
 
-   🔹 Clase 'Desconocido':
-      - 🎯 Precisión: 0.00%
-      - 🔍 Recall: 0.00%
-      - 🚀 Especificidad: 85.37%
-      - ⚖️ F1-Score: 0.00%
+🔹 Clase 'div':
+   🎯 Precisión: 66.00%
+   🔍 Recall: 82.91%
+   🚀 Especificidad: 98.50%
+   ⚖️ F1-Score: 73.50%
 
-   🔹 Clase 'div':
-      - 🎯 Precisión: 5.60%
-      - 🔍 Recall: 82.91%
-      - 🚀 Especificidad: 96.32%
-      - ⚖️ F1-Score: 10.50%
+🔹 Clase 'equals':
+   🎯 Precisión: 100.00%
+   🔍 Recall: 67.43%
+   🚀 Especificidad: 100.00%
+   ⚖️ F1-Score: 80.55%
 
-   🔹 Clase 'equals':
-      - 🎯 Precisión: 67.15%
-      - 🔍 Recall: 68.39%
-      - 🚀 Especificidad: 92.99%
-      - ⚖️ F1-Score: 67.77%
+🔹 Clase 'sub':
+   🎯 Precisión: 0.00%
+   🔍 Recall: 0.00%
+   🚀 Especificidad: 88.15%
+   ⚖️ F1-Score: 0.00%
 
-   🔹 Clase 'sub':
-      - 🎯 Precisión: 90.10%
-      - 🔍 Recall: 82.43%
-      - 🚀 Especificidad: 92.61%
-      - ⚖️ F1-Score: 86.10%
+🔹 Clase 'times':
+   🎯 Precisión: 0.00%
+   🔍 Recall: 0.00%
+   🚀 Especificidad: 99.98%
+   ⚖️ F1-Score: 0.00%
 
-   🔹 Clase 'sum':
-      - 🎯 Precisión: 99.67%
-      - 🔍 Recall: 59.12%
-      - 🚀 Especificidad: 99.90%
-      - ⚖️ F1-Score: 74.22%
-
-   🔹 Clase 'times':
-      - 🎯 Precisión: 99.22%
-      - 🔍 Recall: 70.19%
-      - 🚀 Especificidad: 99.98%
-      - ⚖️ F1-Score: 82.22%
