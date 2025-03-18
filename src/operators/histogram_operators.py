@@ -1,9 +1,32 @@
+"""
+===============================================================================
+Proyecto: Inksolver
+Archivo: histogram_operators.py
+Descripcion: Genera un histograma de conteo de imagenes de operadores matematicos.
+Autor: Alejandro Castro Martinez
+Fecha de creacion: 2025-03-15
+Ultima modificacion: 2025-03-18
+Version: 1.0
+===============================================================================
+Dependencias:
+- Python 3.10
+- Librerias externas: Matplotlib, Pandas, os, warnings, collections
+===============================================================================
+Uso:
+Ejecutar el script con el siguiente comando:
+    python histogram_operators.py
+===============================================================================
+Notas:
+- El dataset debe estar en '../../data/operators/raw/'.
+- El histograma generado se guarda en 'operator_analysis/operator_histogram.png'.
+===============================================================================
+"""
+
 import os
 import matplotlib.pyplot as plt
 import warnings
 import pandas as pd
 from collections import defaultdict
-import random
 
 # Suprimir warnings de Matplotlib
 warnings.simplefilter("ignore", category=UserWarning)
@@ -11,14 +34,14 @@ warnings.simplefilter("ignore", category=UserWarning)
 # Definir la ruta del dataset de operadores
 dataset_path = "../../data/operators/raw/"
 
-# Definir la carpeta donde se guardarán las gráficas
+# Definir la carpeta donde se guardaran las graficas
 output_dir = "operator_analysis"
 os.makedirs(output_dir, exist_ok=True)  # Crear la carpeta si no existe
 
-# Obtener las categorías de operadores
+# Obtener las categorias de operadores
 categories = sorted(os.listdir(dataset_path))
 
-# Contar el número de imágenes por categoría
+# Contar el numero de imagenes por categoria
 image_counts = defaultdict(int)
 
 for category in categories:
@@ -40,7 +63,7 @@ else:
     plt.figure(figsize=(8, 5))
     bars = plt.bar(df_counts["Category"], df_counts["Image Count"], color=colors, edgecolor="black")
 
-    # Etiquetas y título
+    # Etiquetas y titulo
     plt.xlabel("Operator Categories", fontsize=12)
     plt.ylabel("Number of Images", fontsize=12)
     plt.title("Histogram of Operator Image Counts", fontsize=14)
@@ -63,7 +86,7 @@ else:
     except:
         pass  # Si hay un error, continuar sin mostrar warning
 
-    # Verificar si la figura realmente se mostró
+    # Verificar si la figura realmente se mostro
     if not plt.get_fignums():
         print("\n\033[91m" + "=" * 50)
         print("⚠️  WARNING: Interactive display is not available ⚠️")

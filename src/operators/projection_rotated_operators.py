@@ -1,3 +1,27 @@
+"""
+===============================================================================
+Proyecto: Inksolver
+Archivo: projection_rotated_operators.py
+Descripcion: Genera graficas de histogramas de proyeccion de imagenes de operadores matematicos tras rotarlas 45°.
+Autor: Alejandro Castro Martinez
+Fecha de creacion: 2025-03-16
+Ultima modificacion: 2025-03-18
+Version: 1.0
+===============================================================================
+Dependencias:
+- Python 3.10
+- Librerias externas: OpenCV (cv2), NumPy, Matplotlib, os, warnings
+===============================================================================
+Uso:
+Ejecutar el script con el siguiente comando:
+    python projection_rotated_operators.py
+===============================================================================
+Notas:
+- El dataset debe estar en '../../data/operators/raw/'.
+- Las graficas generadas se guardaran en 'operator_analysis/'.
+===============================================================================
+"""
+
 import os
 import cv2
 import numpy as np
@@ -11,12 +35,21 @@ warnings.simplefilter("ignore", category=UserWarning)
 dataset_path = "../../data/operators/raw/"
 operation_categories = ["div", "equals", "sub", "sum", "times"]
 
-# Definir la carpeta donde se guardarán las gráficas
+# Definir la carpeta donde se guardaran las graficas
 output_dir = "operator_analysis"
 os.makedirs(output_dir, exist_ok=True)  # Crear la carpeta si no existe
 
-def load_images(category, max_samples=3):  # Solo 3 imágenes por categoría
-    """Carga imágenes de una categoría específica."""
+def load_images(category, max_samples=3):
+    """
+    Carga imagenes de una categoria especifica.
+
+    Args:
+        category (str): Nombre de la categoria.
+        max_samples (int, opcional): Numero maximo de imagenes a cargar. Por defecto, 3.
+
+    Returns:
+        list: Lista de imagenes en escala de grises.
+    """
     category_path = os.path.join(dataset_path, category)
     images = []
     if os.path.isdir(category_path):
@@ -29,84 +62,72 @@ def load_images(category, max_samples=3):  # Solo 3 imágenes por categoría
     return images
 
 def rotate_image_45(img):
-    """Rota la imagen 45 grados manteniendo el tamaño original."""
+    """
+    Rota la imagen 45 grados manteniendo el tamano original.
+
+    Args:
+        img (numpy.ndarray): Imagen en escala de grises.
+
+    Returns:
+        numpy.ndarray: Imagen rotada.
+    """
     h, w = img.shape
     center = (w // 2, h // 2)
-
-    # Matriz de rotación para 45 grados
     rotation_matrix = cv2.getRotationMatrix2D(center, 45, 1.0)
-
-    # Calcular el tamaño de la nueva imagen para evitar recortes
     cos = np.abs(rotation_matrix[0, 0])
     sin = np.abs(rotation_matrix[0, 1])
     new_w = int((h * sin) + (w * cos))
     new_h = int((h * cos) + (w * sin))
-
-    # Ajustar la matriz de transformación para el centro de la nueva imagen
     rotation_matrix[0, 2] += (new_w / 2) - center[0]
     rotation_matrix[1, 2] += (new_h / 2) - center[1]
-
-    # Aplicar la rotación
     rotated_img = cv2.warpAffine(img, rotation_matrix, (new_w, new_h), borderValue=255)
-
     return rotated_img
 
 def compute_projection_histogram(img, axis=0):
-    """Calcula el histograma de proyección en la dirección especificada y lo normaliza."""
-    projection = np.sum(img, axis=axis)
-    return projection / np.max(projection)  # Normalización
+    """
+    Calcula el histograma de proyeccion en la direccion especificada y lo normaliza.
 
-# Cargar imágenes por categoría
+    Args:
+        img (numpy.ndarray): Imagen en escala de grises.
+        axis (int): Direccion del histograma (0=vertical, 1=horizontal).
+
+    Returns:
+        numpy.ndarray: Histograma de proyeccion normalizado.
+    """
+    projection = np.sum(img, axis=axis)
+    return projection / np.max(projection)
+
+# Cargar imagenes por categoria
 operation_images = {category: load_images(category) for category in operation_categories}
 
-# Procesar cada operador y generar las gráficas
+# Procesar cada operador y generar las graficas
 for category in operation_categories:
     images = operation_images[category]
     if not images:
         continue
 
     fig, axes = plt.subplots(len(images), 3, figsize=(12, len(images) * 3))
-    fig.suptitle(f"Proyección Normalizada (Rotado 45°) - {category}", fontsize=14, fontweight="bold")
+    fig.suptitle(f"Proyeccion Normalizada (Rotado 45°) - {category}", fontsize=14, fontweight="bold")
 
     for i, img in enumerate(images):
-        # Rotar la imagen 45 grados
         rotated_img = rotate_image_45(img)
-
-        # Calcular histogramas después de la rotación
         hist_horizontal_rot = compute_projection_histogram(rotated_img, axis=1)
         hist_vertical_rot = compute_projection_histogram(rotated_img, axis=0)
-
-        # Mostrar imagen rotada
+        
         axes[i, 0].imshow(rotated_img, cmap='gray')
         axes[i, 0].set_title("Imagen Rotada 45°")
         axes[i, 0].axis("off")
-
-        # Mostrar histograma horizontal
+        
         axes[i, 1].plot(hist_horizontal_rot, color="blue")
-        axes[i, 1].set_title("Proyección Horizontal")
+        axes[i, 1].set_title("Proyeccion Horizontal")
         axes[i, 1].set_xlim([0, len(hist_horizontal_rot)])
-
-        # Mostrar histograma vertical
+        
         axes[i, 2].plot(hist_vertical_rot, color="red")
-        axes[i, 2].set_title("Proyección Vertical")
+        axes[i, 2].set_title("Proyeccion Vertical")
         axes[i, 2].set_xlim([0, len(hist_vertical_rot)])
 
     plt.tight_layout()
-
-    # Guardar la figura en la carpeta 'operator_analysis'
     output_path = os.path.join(output_dir, f"projection_rotated_{category}.png")
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
-
-    # Intentar mostrar la imagen sin warnings
-    try:
-        plt.show(block=False)
-    except:
-        pass  # Si hay un error, continuar sin mostrar warning
-
-    # Verificar si la figura realmente se mostró
-    if not plt.get_fignums():
-        print("\n\033[91m" + "=" * 50)
-        print(f"⚠️  WARNING: Interactive display is not available for {category} ⚠️")
-        print("=" * 50 + "\033[0m\n")
 
     print(f"\033[93m📂 Rotated projection image saved at: {output_path}\033[0m")

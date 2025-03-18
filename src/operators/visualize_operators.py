@@ -1,3 +1,27 @@
+"""
+===============================================================================
+Proyecto: Inksolver
+Archivo: visualize_operators.py
+Descripcion: Muestra muestras de imagenes de operadores matematicos y las guarda como una imagen de referencia.
+Autor: Alejandro Castro Martinez
+Fecha de creacion: 2025-03-15
+Ultima modificacion: 2025-03-18
+Version: 1.0
+===============================================================================
+Dependencias:
+- Python 3.10
+- Librerias externas: OpenCV (cv2), Matplotlib, os, warnings, collections
+===============================================================================
+Uso:
+Ejecutar el script con el siguiente comando:
+    python visualize_operators.py
+===============================================================================
+Notas:
+- El dataset debe estar en '../../data/operators/raw/'.
+- La imagen generada se guarda en 'operator_analysis/operator_samples.png'.
+===============================================================================
+"""
+
 import os
 import cv2
 import matplotlib.pyplot as plt
@@ -7,7 +31,7 @@ from collections import defaultdict
 # Suprimir todos los warnings de matplotlib
 warnings.simplefilter("ignore", category=UserWarning)
 
-# Definir la nueva ruta del dataset de operadores
+# Definir la ruta del dataset de operadores
 dataset_path = "../../data/operators/raw/"
 
 # Definir la carpeta donde se guardarán las gráficas

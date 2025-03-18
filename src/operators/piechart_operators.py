@@ -1,3 +1,27 @@
+"""
+===============================================================================
+Proyecto: Inksolver
+Archivo: piechart_operators.py
+Descripcion: Genera un diagrama de pastel del numero de imagenes por categoria de operadores matematicos.
+Autor: Alejandro Castro Martinez
+Fecha de creacion: 2025-03-15
+Ultima modificacion: 2025-03-18
+Version: 1.0
+===============================================================================
+Dependencias:
+- Python 3.10
+- Librerias externas: Matplotlib, Pandas, os, warnings, collections
+===============================================================================
+Uso:
+Ejecutar el script con el siguiente comando:
+    python piechart_operators.py
+===============================================================================
+Notas:
+- El dataset debe estar en '../../data/operators/raw/'.
+- La grafica generada se guarda en 'operator_analysis/operator_piechart.png'.
+===============================================================================
+"""
+
 import os
 import matplotlib.pyplot as plt
 import warnings
@@ -10,14 +34,14 @@ warnings.simplefilter("ignore", category=UserWarning)
 # Definir la ruta del dataset de operadores
 dataset_path = "../../data/operators/raw/"
 
-# Definir la carpeta donde se guardarán las gráficas
+# Definir la carpeta donde se guardaran las graficas
 output_dir = "operator_analysis"
 os.makedirs(output_dir, exist_ok=True)  # Crear la carpeta si no existe
 
-# Obtener las categorías de operadores
+# Obtener las categorias de operadores
 categories = sorted(os.listdir(dataset_path))
 
-# Contar el número de imágenes por categoría
+# Contar el numero de imagenes por categoria
 image_counts = defaultdict(int)
 
 for category in categories:
@@ -32,17 +56,17 @@ else:
     # Crear DataFrame con los conteos
     df_counts = pd.DataFrame(list(image_counts.items()), columns=["Category", "Image Count"])
     
-    # Generar colores para cada sección
+    # Generar colores para cada seccion
     colors = [plt.cm.Paired(i) for i in range(len(df_counts))]
 
-    # Configurar "explode" para separar más las categorías pequeñas
+    # Configurar "explode" para separar mas las categorias pequenas
     explode = [0.2 if count < 5 else 0 for count in df_counts["Image Count"]]
 
-    # Función para ocultar valores menores al 1%
+    # Funcion para ocultar valores menores al 1%
     def autopct_format(pct):
         return f"{pct:.1f}%" if pct >= 1 else ""
 
-    # Crear la figura del diagrama de pastel (sin círculo en el centro)
+    # Crear la figura del diagrama de pastel
     plt.figure(figsize=(8, 8))
     wedges, texts, autotexts = plt.pie(
         df_counts["Image Count"], labels=df_counts["Category"], autopct=autopct_format,
@@ -50,7 +74,7 @@ else:
         explode=explode, pctdistance=0.85
     )
 
-    # Ajustar tamaño de los textos
+    # Ajustar tamanio de los textos
     for text in texts:
         text.set_fontsize(12)
         text.set_fontweight("bold")
@@ -61,7 +85,7 @@ else:
         autotext.set_fontweight("bold")
         autotext.set_bbox(dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.3"))
 
-    # Título del gráfico
+    # Titulo del grafico
     plt.title("Percentage of Operator Images", fontsize=14, fontweight="bold")
 
     # Guardar la imagen
@@ -74,7 +98,7 @@ else:
     except:
         pass  # Si hay un error, continuar sin mostrar warning
 
-    # Verificar si la figura realmente se mostró
+    # Verificar si la figura realmente se mostro
     if not plt.get_fignums():
         print("\n\033[91m" + "=" * 50)
         print("⚠️  WARNING: Interactive display is not available ⚠️")
