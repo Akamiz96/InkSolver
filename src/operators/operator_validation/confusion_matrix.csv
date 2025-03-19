@@ -1,6 +1,7 @@
-,Desconocido,div,equals,sub,times
-Desconocido,0,0,0,0,0
-div,33,165,0,0,1
-equals,1062,85,3810,693,0
-sub,0,0,0,0,0
-times,0,0,0,0,0
+,Desconocido,div,equals,sub,sum,times
+Desconocido,0,0,0,0,0,0
+div,33,165,0,0,0,1
+equals,2441,177,8962,1524,0,0
+sub,259,1539,4126,28025,45,3
+sum,8174,293,258,1526,14847,14
+times,164,771,0,30,4,2282
