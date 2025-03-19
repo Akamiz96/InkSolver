@@ -528,35 +528,68 @@ Tras la clasificación de todas las imágenes manuscritas y la evaluación con l
 
 ✅ **Precisión Global del Modelo:** **93.33%**
 
-🔹 **Clase 'div':**  
+📌 **Interpretación:**  
+El modelo logró una **precisión global del 93.33%**, lo que indica que es altamente efectivo en la clasificación de operadores matemáticos manuscritos. Esta métrica refleja el porcentaje de predicciones correctas sobre el total de imágenes evaluadas, mostrando que el enfoque basado en **análisis de proyecciones y reglas de clasificación** es robusto y confiable en un entorno de prueba real.  
+
+
+---
+
+🔹 **Clase 'div' (División `/`)**  
    - 🎯 **Precisión:** 98.95%  
    - 🔍 **Recall:** 94.67%  
    - 🚀 **Especificidad:** 99.75%  
    - ⚖️ **F1-Score:** 96.76%  
 
-🔹 **Clase 'equals':**  
+📌 **Interpretación:**  
+El operador de **división (`/`)** fue clasificado con una **alta precisión (98.95%)**, lo que significa que cuando el modelo identifica un operador como `div`, casi siempre es correcto. Sin embargo, el **recall del 94.67%** indica que algunas muestras de este operador fueron clasificadas erróneamente como otros símbolos.  
+La **especificidad del 99.75%** confirma que las otras clases no se confunden fácilmente con `div`, lo que sugiere que la metodología implementada es efectiva en la distinción de este operador.  
+
+---
+
+🔹 **Clase 'equals' (Igual `=`)**  
    - 🎯 **Precisión:** 98.49%  
    - 🔍 **Recall:** 87.00%  
    - 🚀 **Especificidad:** 99.67%  
    - ⚖️ **F1-Score:** 92.39%  
 
-🔹 **Clase 'sub':**  
+📌 **Interpretación:**  
+El operador de **igual (`=`)** mostró un buen desempeño general con una **precisión del 98.49%**, lo que significa que casi todas las predicciones de `equals` fueron correctas. Sin embargo, el **recall del 87.00%** indica que aproximadamente **1 de cada 8 imágenes de `equals` fueron clasificadas erróneamente en otra categoría**. Esto sugiere que podría haber cierta similitud con operadores como `sub` o `sum`, lo que podría explicar estas confusiones.  
+
+---
+
+🔹 **Clase 'sub' (Resta `-`)**  
    - 🎯 **Precisión:** 99.33%  
    - 🔍 **Recall:** 98.67%  
    - 🚀 **Especificidad:** 99.83%  
    - ⚖️ **F1-Score:** 99.00%  
 
-🔹 **Clase 'sum':**  
+📌 **Interpretación:**  
+El operador de **resta (`-`)** obtuvo uno de los mejores desempeños, con **una precisión del 99.33% y un recall del 98.67%**. Esto significa que el modelo es extremadamente preciso tanto en la identificación como en la recuperación de este operador.  
+La **especificidad del 99.83%** confirma que casi ninguna imagen de otras clases fue clasificada erróneamente como `sub`, lo que resalta la efectividad del método en la detección de este operador.  
+
+---
+
+🔹 **Clase 'sum' (Suma `+`)**  
    - 🎯 **Precisión:** 100.00%  
    - 🔍 **Recall:** 87.33%  
    - 🚀 **Especificidad:** 100.00%  
    - ⚖️ **F1-Score:** 93.24%  
 
-🔹 **Clase 'times':**  
+📌 **Interpretación:**  
+El operador de **suma (`+`)** alcanzó una **precisión perfecta del 100.00%**, lo que indica que todas las predicciones realizadas para `sum` fueron correctas. Sin embargo, el **recall del 87.33%** muestra que algunas imágenes reales de `sum` fueron clasificadas erróneamente en otras categorías, probablemente en `equals` o `times`, debido a su similitud estructural.  
+A pesar de ello, su **especificidad del 100.00%** significa que ninguna otra clase fue identificada erróneamente como `sum`, lo que demuestra que este operador tiene características bien diferenciadas dentro del modelo.  
+
+---
+
+🔹 **Clase 'times' (Multiplicación `×`)**  
    - 🎯 **Precisión:** 94.89%  
    - 🔍 **Recall:** 99.00%  
    - 🚀 **Especificidad:** 98.67%  
    - ⚖️ **F1-Score:** 96.90%  
+
+📌 **Interpretación:**  
+El operador de **multiplicación (`×`)** mostró una **excelente capacidad de recuperación (recall del 99.00%)**, lo que significa que el modelo identificó correctamente casi todas las imágenes de `times`. Sin embargo, su **precisión del 94.89%** indica que algunas predicciones de `times` fueron incorrectas, posiblemente clasificando operadores similares en su lugar.  
+Su **especificidad del 98.67%** confirma que el modelo rara vez confunde otros operadores con `times`, lo que sugiere que la metodología utilizada es adecuada, aunque con margen de mejora en la precisión final.  
 
 ---
 

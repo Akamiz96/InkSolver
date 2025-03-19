@@ -41,6 +41,8 @@ Inksolver/
 │── data/                  # Conjunto de datos utilizados
 │   ├── operators/         # Datos de operadores
 │   │   ├── raw/          # Datos sin procesar
+|   |   |   ├── dataset/   # Datos provenientes de Kaggle
+|   |   |   ├── test/      # Datos realizados por el autor  
 │   │   ├── processed/    # Datos procesados
 │   ├── operands/          # Datos de operandos
 │   │   ├── raw/          # Datos sin procesar
@@ -53,16 +55,10 @@ Inksolver/
 │   ├── introduction.md    # Introducción general al proyecto
 │   ├── operators/         # Documentación sobre operadores
 │   │   ├── analysis.md   # Documento de análisis
-│   │   ├── process.md    # Documento de proceso
-│   │   ├── results.md    # Documento de resultados
 │   ├── operands/          # Documentación sobre operandos
 │   │   ├── analysis.md   # Documento de análisis
-│   │   ├── process.md    # Documento de proceso
-│   │   ├── results.md    # Documento de resultados
 │   ├── equations/         # Documentación sobre ecuaciones
 │   │   ├── analysis.md   # Documento de análisis
-│   │   ├── process.md    # Documento de proceso
-│   │   ├── results.md    # Documento de resultados
 ```
 
 ## 🚀 Instalación
