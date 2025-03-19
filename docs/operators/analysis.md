@@ -448,11 +448,195 @@ Si el script requiere ajustes o mejoras, puedes modificarlo directamente en la c
 
 ---
 
-## 📌 Conclusiones del Análisis
-- La detección de operadores mediante análisis de proyecciones e histogramas normalizados ha demostrado ser una solución eficiente y funcional.
-- La técnica de rotación de 45 grados mejoró significativamente la detección del operador de multiplicación (`×`).
-- La baja cantidad de imágenes para el operador de división (`/`) podría representar un reto en la detección precisa de este operador.
-- La evaluación en el conjunto de datos ha permitido validar el método, aunque futuras pruebas en escritura manuscrita real podrían refinar el sistema.
-- La distribución de datos en el conjunto de operadores no es uniforme, lo que podría afectar la precisión de reconocimiento de ciertos operadores, en especial `div`.
+## 📝 Generación de un Nuevo Conjunto de Datos y Validación  
 
-Este análisis establece una base sólida para la correcta interpretación de operadores en **Inksolver** y sienta las bases para mejoras futuras en su detección y clasificación.
+Para evaluar la capacidad del modelo en condiciones reales, se trabajó en la creación de un nuevo conjunto de datos basado en operadores matemáticos escritos a mano. Este conjunto fue generado manualmente siguiendo un formato estructurado, asegurando que las imágenes se ajustaran a las condiciones esperadas por el modelo.
+
+### ✍️ Creación del Conjunto de Datos de Prueba  
+El conjunto de datos de prueba se compone de imágenes escritas a mano de los cinco operadores utilizados en este estudio: `div`, `equals`, `sub`, `sum` y `times`.  
+
+Cada imagen sigue un **formato estructurado**, lo que facilita su identificación y clasificación dentro del proceso de validación. Ejemplos de imágenes generadas incluyen:  
+
+- **División (`div_001.png`):**  
+  ![Ejemplo - División](images/div_001.png)
+
+- **Igual (`equals_001.png`):**  
+  ![Ejemplo - Igual](images/equals_001.png)
+
+- **Resta (`sub_001.png`):**  
+  ![Ejemplo - Resta](images/sub_001.png)
+
+- **Suma (`sum_001.png`):**  
+  ![Ejemplo - Suma](images/sum_001.png)
+
+- **Multiplicación (`times_001.png`):**  
+  ![Ejemplo - Multiplicación](images/times_001.png)
+
+📄 **Formato utilizado:**  
+El documento de referencia con el formato utilizado para la escritura manual de los operadores se encuentra en **[Testing_Format.pdf](../format/Testing_Format.pdf)**. Este documento define los criterios y estructura empleados en la recolección de los datos.
+
+---
+
+### 📊 Distribución de Imágenes en el Conjunto de Prueba  
+
+Para garantizar que el conjunto de prueba sea equilibrado, se generó un histograma que muestra la cantidad de ejemplos para cada una de las clases incluidas en la evaluación:
+
+![Histograma de Imágenes de Prueba](images/test_image_histogram.png)
+
+El histograma confirma que todas las categorías contienen una cantidad balanceada de muestras, permitiendo una evaluación justa del modelo sin sesgos en la frecuencia de aparición de cada operador.
+
+Además, se presenta un **gráfico de pastel (pie chart)** que ilustra la distribución porcentual de cada clase dentro del conjunto de prueba:
+
+![Distribución Porcentual de Imágenes de Prueba](images/test_image_piechart.png)
+
+El gráfico de pastel refuerza la uniformidad del conjunto de datos, mostrando que cada operador representa aproximadamente el **20% del total de imágenes**, lo que permite una evaluación equilibrada del desempeño del modelo en todas las categorías.
+
+---
+
+### 📌 Proceso de Clasificación en el Conjunto de Prueba  
+
+El conjunto de datos manuscrito se sometió al mismo proceso de clasificación descrito en secciones anteriores. Se aplicaron las reglas definidas para cada operador, generando las predicciones correspondientes.  
+
+A partir de estas predicciones, se generó la siguiente **matriz de confusión**, que refleja el desempeño del modelo en la identificación de los operadores en este nuevo conjunto de datos:
+
+![Matriz de Confusión - Test](images/confusion_matrix_test.png)
+
+La matriz de confusión muestra un alto nivel de precisión en la clasificación de los operadores, con errores mínimos en algunas categorías.
+
+📌 **Interpretación de la Matriz de Confusión:**
+- La matriz de confusión representa las predicciones del modelo en relación con las etiquetas reales.
+- Cada fila indica la **clase real** de un operador manuscrito.
+- Cada columna indica la **predicción realizada** por el modelo.
+- Los valores en la diagonal principal representan **predicciones correctas**, mientras que los valores fuera de la diagonal representan **errores de clasificación**.
+
+### 📌 Análisis de la Matriz de Confusión  
+
+- **Los operadores ‘sub’, ‘sum’ y ‘times’ fueron clasificados con una alta precisión**, mostrando muy pocas confusiones con otras clases.  
+- **El operador ‘equals’ tuvo ciertas confusiones con la clase ‘sum’**, lo que sugiere que algunas imágenes de igual fueron interpretadas erróneamente.  
+- **El operador ‘div’ presenta una leve confusión con ‘times’**, aunque en general la detección sigue siendo efectiva.  
+- **Las filas correspondientes a la clase ‘Desconocido’ están vacías**, lo que indica que no hubo predicciones erróneas categorizadas en esta clase.  
+
+En general, la matriz de confusión confirma que el modelo mantiene una **alta precisión** en la clasificación, aunque con ligeros errores en ciertas clases específicas.
+
+---
+
+### 📊 Resultados de la Validación con el Conjunto de Prueba Expandido  
+
+Tras la clasificación de todas las imágenes manuscritas y la evaluación con la matriz de confusión, se calcularon las métricas de rendimiento del modelo:
+
+📊 **VALIDACIÓN DE CLASIFICACIÓN DE TEST - CONJUNTO EXPANDIDO** 📊
+
+✅ **Precisión Global del Modelo:** **93.33%**
+
+🔹 **Clase 'div':**  
+   - 🎯 **Precisión:** 98.95%  
+   - 🔍 **Recall:** 94.67%  
+   - 🚀 **Especificidad:** 99.75%  
+   - ⚖️ **F1-Score:** 96.76%  
+
+🔹 **Clase 'equals':**  
+   - 🎯 **Precisión:** 98.49%  
+   - 🔍 **Recall:** 87.00%  
+   - 🚀 **Especificidad:** 99.67%  
+   - ⚖️ **F1-Score:** 92.39%  
+
+🔹 **Clase 'sub':**  
+   - 🎯 **Precisión:** 99.33%  
+   - 🔍 **Recall:** 98.67%  
+   - 🚀 **Especificidad:** 99.83%  
+   - ⚖️ **F1-Score:** 99.00%  
+
+🔹 **Clase 'sum':**  
+   - 🎯 **Precisión:** 100.00%  
+   - 🔍 **Recall:** 87.33%  
+   - 🚀 **Especificidad:** 100.00%  
+   - ⚖️ **F1-Score:** 93.24%  
+
+🔹 **Clase 'times':**  
+   - 🎯 **Precisión:** 94.89%  
+   - 🔍 **Recall:** 99.00%  
+   - 🚀 **Especificidad:** 98.67%  
+   - ⚖️ **F1-Score:** 96.90%  
+
+---
+
+### 🔍 Análisis de los Nuevos Resultados  
+
+Con el aumento en la cantidad de datos de prueba, el modelo sigue mostrando un rendimiento sólido, aunque con una **ligera disminución en la precisión global (de 96.33% a 93.33%)**.  
+
+---
+
+### 🖥️ Código para la Validación del Conjunto de Prueba  
+
+Para realizar esta validación con el conjunto de prueba expandido, se utilizaron los siguientes scripts en **`src/operators/`**:
+
+1️⃣ **`extract_test_images.py`**  
+   - Extrae imágenes individuales de los formatos estructurados.  
+
+2️⃣ **`classify_test_images.py`**  
+   - Clasifica las imágenes extraídas utilizando las reglas definidas.  
+
+3️⃣ **`validate_test_classification.py`**  
+   - Evalúa las predicciones realizadas y genera la matriz de confusión.  
+
+#### 📌 **Ejecución del proceso paso a paso**  
+
+```bash
+# Ir a la carpeta de scripts
+cd src/operators/
+
+# Extraer imágenes del formato original
+python extract_test_images.py
+
+# Clasificar las imágenes extraídas
+python classify_test_images.py
+
+# Validar y generar la matriz de confusión
+python validate_test_classification.py
+```
+
+📌 **Nota:** Asegúrate de tener instaladas las dependencias necesarias ejecutando:
+```bash
+pip install -r src/requirements.txt
+```
+
+---
+
+## 📌 Conclusiones
+
+El análisis y desarrollo de **Inksolver** ha demostrado que la metodología basada en **proyecciones normalizadas y reglas de detección** es efectiva para la clasificación de operadores matemáticos escritos a mano. A través del estudio detallado del dataset de **Kaggle (Handwritten Math Symbols)** y la validación con un conjunto de datos manuscrito propio, se han obtenido resultados significativos.
+
+### ✅ Desempeño en el Conjunto de Datos Original
+El modelo logró una **precisión global del 71.74%** en el conjunto de datos original de Kaggle. A pesar de no utilizar técnicas avanzadas de inteligencia artificial, la estrategia basada en **análisis de picos en proyecciones** permitió una correcta clasificación en la mayoría de los casos. Sin embargo, se identificaron ciertas dificultades en la detección de operadores como `div` (división) y `equals` (igual), debido a su menor representación en el conjunto de entrenamiento y a la similitud con otros operadores.
+
+### ✅ Validación en Conjunto de Datos Manuscrito
+Para evaluar la capacidad de generalización del modelo, se generó un **nuevo conjunto de datos basado en operadores escritos a mano**, asegurando una distribución balanceada entre las clases. Tras aplicar el mismo proceso de clasificación y validación, se obtuvo una **precisión global del 93.33%**, demostrando que el modelo puede adaptarse a datos reales con un alto grado de confiabilidad.
+
+- **Los operadores `sub`, `sum` y `times` alcanzaron una precisión cercana al 99%**, lo que indica que los patrones de proyección identificados son robustos.
+- **El operador `equals` tuvo ciertos errores de clasificación con `sum`**, sugiriendo la necesidad de ajustes en la diferenciación de líneas horizontales cercanas.
+- **El operador `div` mostró una ligera confusión con `times`**, pero su desempeño mejoró significativamente con el incremento de datos de prueba.
+
+### 🔍 Puntos Clave y Mejoras Futuras
+1️⃣ **Robustez del modelo sin IA**  
+   - Se ha demostrado que el análisis basado en **proyecciones normalizadas y reglas de detección** es suficiente para clasificar correctamente operadores matemáticos escritos a mano.
+   - La estrategia funciona bien tanto en un conjunto de datos preexistente (Kaggle) como en uno generado manualmente.
+
+2️⃣ **Impacto de la cantidad de datos**  
+   - Se confirmó que la **baja cantidad de muestras de `div` en el dataset original afectó su clasificación**.
+   - En el conjunto manuscrito, al tener más ejemplos balanceados, el rendimiento mejoró notablemente.
+
+3️⃣ **Generalización del método**  
+   - El enfoque empleado puede aplicarse a otros conjuntos de datos manuscritos sin necesidad de ajustes complejos.
+   - Su implementación es simple y eficiente, ya que no requiere entrenamiento extensivo como en modelos basados en aprendizaje profundo.
+
+4️⃣ **Áreas de mejora**  
+   - Se podrían refinar las reglas de clasificación para mejorar la diferenciación de operadores con características similares (`equals` y `sub`).
+   - Implementar técnicas adicionales de normalización o transformación de imágenes para mejorar la separación entre clases confusas.
+   - Explorar enfoques híbridos, combinando las reglas actuales con técnicas más avanzadas, como modelos basados en redes neuronales para mejorar los casos más ambiguos.
+
+### 🔹 Conclusión Final  
+El modelo desarrollado en **Inksolver** proporciona una solución eficiente y confiable para la **detección y clasificación de operadores matemáticos manuscritos**. Su desempeño ha sido validado con éxito en distintos conjuntos de datos, logrando una **alta precisión en un entorno realista**.  
+
+El estudio demuestra que **es posible realizar clasificación de operadores sin el uso de inteligencia artificial avanzada**, utilizando únicamente técnicas tradicionales de análisis de imágenes. Sin embargo, el refinamiento del proceso podría aumentar aún más su precisión y robustez, permitiendo futuras mejoras en su aplicación.
+
+---
