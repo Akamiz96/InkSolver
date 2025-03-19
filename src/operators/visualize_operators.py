@@ -32,7 +32,7 @@ from collections import defaultdict
 warnings.simplefilter("ignore", category=UserWarning)
 
 # Definir la ruta del dataset de operadores
-dataset_path = "../../data/operators/raw/"
+dataset_path = "../../data/operators/raw/dataset/"
 
 # Definir la carpeta donde se guardarán las gráficas
 output_dir = "operator_analysis"

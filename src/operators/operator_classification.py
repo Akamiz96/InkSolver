@@ -32,7 +32,7 @@ import warnings
 warnings.simplefilter("ignore", category=UserWarning)
 
 # Definir la ruta del dataset de operadores
-dataset_path = "../../data/operators/raw/"
+dataset_path = "../../data/operators/raw/dataset/"
 operation_categories = ["div", "equals", "sub", "sum", "times"]
 
 # Definir la carpeta donde se guardara el CSV con los resultados
