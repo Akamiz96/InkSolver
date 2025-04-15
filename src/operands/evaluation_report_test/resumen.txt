@@ -1,0 +1,1 @@
+Precisión global del modelo: 0.9180
