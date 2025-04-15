@@ -836,4 +836,387 @@ Estos dos scripts constituyen el **núcleo funcional del proceso de clasificaci�
 
 ---
 
-## 📝 Generación de un Nuevo Conjunto de Datos y Validación  
+## 📝 Generación de un Nuevo Conjunto de Datos y Validación
+
+Para evaluar la capacidad del modelo en condiciones reales, se trabajó en la creación de un nuevo conjunto de datos basado en **operandos matemáticos escritos a mano**. Este conjunto fue generado manualmente siguiendo un formato estructurado, asegurando que las imágenes se ajustaran a las condiciones esperadas por el modelo desarrollado en **Inksolver**.
+
+---
+
+### ✍️ Creación del Conjunto de Datos de Prueba
+
+El conjunto de datos de prueba se compone de **imágenes manuscritas de los diez dígitos del 0 al 9**, utilizadas en este estudio como operandos. Cada imagen fue cuidadosamente escrita, escaneada y procesada para mantener coherencia en tamaño, orientación y escala, respetando el formato requerido por los algoritmos de análisis por cuadrantes.
+
+Estas imágenes están organizadas y nombradas de forma estandarizada, lo cual **facilita su identificación automática y su posterior validación** dentro del sistema.
+
+---
+
+### 🖼️ Ejemplos de Imágenes del Conjunto de Prueba
+
+A continuación, se presentan ejemplos representativos de cada operando manuscrito utilizado en el conjunto de prueba:
+
+#### 🔢 0 (`0_1.png`)
+![Ejemplo dígito 0](images/test/0_1.png)
+
+#### 🔢 1 (`1_1.png`)
+![Ejemplo dígito 1](images/test/1_1.png)
+
+#### 🔢 2 (`2_1.png`)
+![Ejemplo dígito 2](images/test/2_1.png)
+
+#### 🔢 3 (`3_1.png`)
+![Ejemplo dígito 3](images/test/3_1.png)
+
+#### 🔢 4 (`4_1.png`)
+![Ejemplo dígito 4](images/test/4_1.png)
+
+#### 🔢 5 (`5_1.png`)
+![Ejemplo dígito 5](images/test/5_1.png)
+
+#### 🔢 6 (`6_1.png`)
+![Ejemplo dígito 6](images/test/6_1.png)
+
+#### 🔢 7 (`7_1.png`)
+![Ejemplo dígito 7](images/test/7_1.png)
+
+#### 🔢 8 (`8_1.png`)
+![Ejemplo dígito 8](images/test/8_1.png)
+
+#### 🔢 9 (`9_1.png`)
+![Ejemplo dígito 9](images/test/9_1.png)
+
+📄 **Formato utilizado:**  
+El documento de referencia con el formato utilizado para la escritura manual de los operadores se encuentra en **[Testing_Format.pdf](../format/Testing_Format.pdf)**. Este documento define los criterios y estructura empleados en la recolección de los datos.
+
+---
+
+### 📊 Distribución de Imágenes en el Conjunto de Prueba  
+
+Para garantizar que el conjunto de prueba sea equilibrado, se generó un **histograma** que muestra la cantidad de ejemplos para cada una de las clases incluidas en la evaluación:
+
+![Histograma de Imágenes de Prueba](images/test_image_histogram.png)
+
+El histograma confirma que todas las categorías contienen una **cantidad balanceada de muestras**, permitiendo una evaluación justa del modelo sin sesgos en la frecuencia de aparición de cada operando.
+
+---
+
+Además, se presenta un **gráfico de pastel (pie chart)** que ilustra la **distribución porcentual de cada clase** dentro del conjunto de prueba:
+
+![Distribución Porcentual de Imágenes de Prueba](images/test_image_piechart.png)
+
+El gráfico de pastel refuerza la **uniformidad del conjunto de datos**, mostrando que cada operando representa aproximadamente el **10% del total de imágenes**, lo que permite una evaluación equilibrada del desempeño del modelo en todas las categorías.
+
+---
+
+### 📌 Proceso de Clasificación en el Conjunto de Prueba  
+
+El conjunto de datos manuscrito se sometió al mismo proceso de clasificación descrito en secciones anteriores. Se aplicó una **subdivisión en una grilla 3×3** a cada imagen, con el fin de calcular la proporción de tinta presente en cada celda. Este vector de 9 valores permitió caracterizar la distribución espacial del trazo en cada dígito.
+
+La siguiente imagen muestra la **huella digital promedio** obtenida para cada clase, a partir del nuevo conjunto manuscrito:
+
+![Huella promedio en conjunto de prueba](images/test/huella_promedio.png)
+
+📌 **Análisis breve:**  
+Las huellas reflejan patrones consistentes con lo observado en el conjunto original. Se evidencia, por ejemplo, que:
+- El dígito `1` mantiene una fuerte presencia en la columna central.
+- El `8` ocupa muchas regiones por su forma cerrada.
+- El `4` y el `7` concentran tinta en la zona superior.
+- El `5`, `6` y `9` comparten actividad en regiones bajas, lo cual puede dificultar su distinción.
+
+---
+
+Posteriormente, se calculó la **distancia euclidiana entre los vectores promedio** de cada clase para analizar si estos siguen siendo suficientemente diferenciables.
+
+![Matriz de distancias euclidianas](images/test/matriz_distancia_euclidean.png)
+
+📌 **Análisis breve:**  
+- Algunas clases como `3` y `4`, o `6` y `9`, presentan distancias bajas, lo que indica **similitud estructural** en su distribución de tinta.
+- El dígito `0` mantiene buena separación con la mayoría de clases.
+- El `8` sigue siendo una clase altamente activa y similar en múltiples zonas, lo cual aumenta la posibilidad de confusión.
+
+---
+
+Finalmente, se procedió a la **clasificación de cada ejemplo manuscrito**, comparando su vector contra los promedios por clase utilizando distancia euclidiana. Esto generó la siguiente matriz de confusión:
+
+![Matriz de confusión - conjunto de prueba](images/test/matriz_confusion.png)
+
+---
+
+📌 **Interpretación de la Matriz de Confusión:**
+
+- La matriz de confusión representa las predicciones del modelo en relación con las etiquetas reales.
+- Cada **fila** corresponde a una clase real (el número manuscrito original).
+- Cada **columna** representa la clase predicha por el modelo.
+- Los valores en la **diagonal principal** indican predicciones correctas.
+- Los valores **fuera de la diagonal** reflejan errores de clasificación, es decir, casos en los que el modelo confundió un dígito con otro.
+
+---
+
+### 📌 Análisis de la Matriz de Confusión  
+
+La matriz obtenida presenta resultados muy favorables en términos de desempeño del modelo sobre el conjunto manuscrito:
+
+- La mayoría de las clases cuentan con **predicciones correctas cercanas o iguales a 300**, lo cual indica un **altísimo nivel de precisión**.
+- Algunos errores notables se presentan en:
+  - **`3` confundiéndose con `5` y `8`**, que tienen curvas similares.
+  - **`5` siendo confundido con `4`**, posiblemente por trazos compartidos en la parte superior izquierda.
+  - **`8` mostrándose como una de las clases con mayor confusión**, especialmente hacia `2` y `6`, como consecuencia de su alta densidad en múltiples regiones de la grilla.
+- El **modelo conserva estabilidad estructural**, manteniendo patrones de errores similares a los observados en el conjunto original, lo cual valida su consistencia ante datos nuevos y reales.
+
+Este análisis confirma que el modelo basado en vectores promedio y distancia euclidiana es capaz de generalizar correctamente a ejemplos manuscritos distintos al conjunto original, siempre que sigan una estructura de entrada compatible con el preprocesamiento definido.
+
+---
+
+### 📊 Resultados de la Validación con el Conjunto de Prueba Expandido  
+
+Tras la clasificación de todas las imágenes manuscritas del nuevo conjunto de prueba y la evaluación con la matriz de confusión correspondiente, se calcularon las métricas de rendimiento del modelo para cada una de las clases, así como la precisión global.
+
+---
+
+📊 **VALIDACIÓN DE CLASIFICACIÓN - CONJUNTO EXPANDIDO** 📊
+
+✅ **Precisión Global del Modelo:** **91.80%**
+
+📌 **Interpretación:**  
+El modelo alcanzó una **precisión global del 91.80%**, lo que confirma su **alta capacidad de generalización** ante ejemplos manuscritos nuevos. Esta métrica representa el porcentaje total de aciertos frente al número total de muestras evaluadas, y demuestra que el enfoque basado en cuadrantes y comparación con vectores promedio sigue siendo sólido y efectivo incluso fuera del conjunto original.
+
+---
+
+#### 🔢 **Dígito `0`**
+- 🎯 **Precisión:** 98.68%  
+- 🔍 **Recall:** 100.00%  
+- 🚀 **Especificidad:** 99.85%  
+- ⚖️ **F1-Score:** 99.34%  
+
+📌 **Interpretación:**  
+El dígito `0` fue clasificado de manera casi perfecta. El modelo detectó todos los ceros sin confundirlos con otros dígitos, lo cual confirma la efectividad del patrón de tinta que define esta clase.
+
+---
+
+#### 🔢 **Dígito `1`**
+- 🎯 **Precisión:** 83.19%  
+- 🔍 **Recall:** 99.00%  
+- 🚀 **Especificidad:** 97.78%  
+- ⚖️ **F1-Score:** 90.41%  
+
+📌 **Interpretación:**  
+El modelo identifica correctamente la gran mayoría de los `1` (recall elevado), pero también incurre en errores de sobreclasificación, donde predice `1` en imágenes que no lo son, reduciendo la precisión.
+
+---
+
+#### 🔢 **Dígito `2`**
+- 🎯 **Precisión:** 97.35%  
+- 🔍 **Recall:** 98.00%  
+- 🚀 **Especificidad:** 99.70%  
+- ⚖️ **F1-Score:** 97.67%  
+
+📌 **Interpretación:**  
+El `2` mantiene un excelente rendimiento general, con alta precisión y recuperación, evidenciando una representación distintiva y fácilmente reconocible por el modelo.
+
+---
+
+#### 🔢 **Dígito `3`**
+- 🎯 **Precisión:** 98.85%  
+- 🔍 **Recall:** 86.33%  
+- 🚀 **Especificidad:** 99.89%  
+- ⚖️ **F1-Score:** 92.17%  
+
+📌 **Interpretación:**  
+Aunque el modelo es muy preciso al predecir `3`, su recall más bajo sugiere que algunos `3` reales fueron confundidos con otros dígitos. Esto podría estar relacionado con la similitud estructural con `8` y `5`.
+
+---
+
+#### 🔢 **Dígito `4`**
+- 🎯 **Precisión:** 89.06%  
+- 🔍 **Recall:** 95.00%  
+- 🚀 **Especificidad:** 98.70%  
+- ⚖️ **F1-Score:** 91.94%  
+
+📌 **Interpretación:**  
+Buen desempeño en general, aunque no tan alto como otras clases. El `4` podría confundirse ocasionalmente con `9` o `7`, según la forma manuscrita adoptada.
+
+---
+
+#### 🔢 **Dígito `5`**
+- 🎯 **Precisión:** 85.61%  
+- 🔍 **Recall:** 81.33%  
+- 🚀 **Especificidad:** 98.48%  
+- ⚖️ **F1-Score:** 83.42%  
+
+📌 **Interpretación:**  
+Es una de las clases con menor rendimiento relativo. Su forma ambigua y sus similitudes con `3`, `6` o incluso `9` podrían estar afectando su clasificación.
+
+---
+
+#### 🔢 **Dígito `6`**
+- 🎯 **Precisión:** 97.25%  
+- 🔍 **Recall:** 94.02%  
+- 🚀 **Especificidad:** 99.70%  
+- ⚖️ **F1-Score:** 95.61%  
+
+📌 **Interpretación:**  
+El dígito `6` se distingue bien dentro del modelo, lo que se refleja en métricas cercanas al ideal. Solo unos pocos errores afectan su recall.
+
+---
+
+#### 🔢 **Dígito `7`**
+- 🎯 **Precisión:** 81.34%  
+- 🔍 **Recall:** 93.00%  
+- 🚀 **Especificidad:** 97.63%  
+- ⚖️ **F1-Score:** 86.78%  
+
+📌 **Interpretación:**  
+Aunque el modelo logra capturar la mayoría de los `7`, su menor precisión sugiere que otras clases se están clasificando incorrectamente como `7`. Esto puede deberse a trazos rectos similares en `1` o `9`.
+
+---
+
+#### 🔢 **Dígito `8`**
+- 🎯 **Precisión:** 96.51%  
+- 🔍 **Recall:** 73.67%  
+- 🚀 **Especificidad:** 99.70%  
+- ⚖️ **F1-Score:** 83.55%  
+
+📌 **Interpretación:**  
+El `8` tiene una forma compleja que puede confundirse con `3`, `0` o `9`, lo que afecta su recall. Aun así, el modelo es muy confiable cuando predice un `8` (alta precisión).
+
+---
+
+#### 🔢 **Dígito `9`**
+- 🎯 **Precisión:** 95.13%  
+- 🔍 **Recall:** 97.67%  
+- 🚀 **Especificidad:** 99.44%  
+- ⚖️ **F1-Score:** 96.38%  
+
+📌 **Interpretación:**  
+El `9` es reconocido de manera muy precisa, con excelentes valores en todas las métricas. Es una de las clases más robustas del sistema.
+
+---
+
+### 🔍 Análisis de los Nuevos Resultados  
+
+Con el **aumento del tamaño del conjunto de prueba**, el modelo mantiene un rendimiento altamente competitivo. La precisión global aumentó **de 72.06% (conjuntos previos) a 91.80%**.
+
+Las clases con estructuras más complejas o ambigüedad visual, como `5`, `7` y `8`, siguen representando un reto para el sistema, mientras que los dígitos con formas más distintivas (como `0`, `2`, `6`, `9`) muestran un desempeño muy alto.
+
+Estos resultados consolidan la efectividad del modelo como una solución **simple, explicable y eficaz** para el reconocimiento de dígitos manuscritos, abriendo camino a futuras mejoras en normalización, enriquecimiento del dataset y optimización del proceso de clasificación.
+
+---
+
+### 🖥️ Código para la Validación del Conjunto de Prueba  
+
+Para realizar la validación con el conjunto de prueba expandido, se utilizaron los siguientes scripts ubicados en la carpeta **`src/operands/`**. Estos scripts automatizan el flujo completo desde la extracción de imágenes hasta el análisis de resultados y generación de métricas.
+
+---
+
+#### 1️⃣ `extract_test_operands.py`  
+Extrae imágenes individuales desde los formatos estructurados del conjunto de prueba manuscrito. Estas imágenes se almacenan con nombres normalizados y listos para su procesamiento posterior.
+
+---
+
+#### 2️⃣ `generate_test_ink_density_csv.py`  
+Calcula los **vectores de densidad de tinta por cuadrante** para cada imagen del conjunto de prueba. Los resultados se guardan en archivos CSV por clase.
+
+---
+
+#### 3️⃣ `ink_test_density_heatmaps.py`  
+Genera mapas de calor con los promedios de densidad de tinta por cuadrante para cada dígito, facilitando la visualización y comparación de patrones espaciales.
+
+---
+
+#### 4️⃣ `operands_test_ink_density_avg.py`  
+A partir de los vectores individuales, este script genera un **vector promedio por dígito**, consolidando la huella característica de cada clase manuscrita.
+
+---
+
+#### 5️⃣ `operands_distance_matrix_test.py`  
+Calcula la **matriz de distancias euclidianas** entre los vectores promedio del conjunto de prueba. Esto permite evaluar la separación entre clases y detectar posibles ambigüedades.
+
+---
+
+#### 6️⃣ `analyze_test_images.py`  
+Realiza la **clasificación de las imágenes del conjunto de prueba** utilizando los vectores promedio generados. Además, produce la **matriz de confusión final** y calcula métricas detalladas por clase.
+
+---
+
+#### 📌 **Ejecución del proceso paso a paso**  
+
+```bash
+# Ir a la carpeta de scripts
+cd src/operands/
+
+# Extraer imágenes manuscritas
+python extract_test_operands.py
+
+# Generar vectores de densidad por cuadrante
+python generate_test_ink_density_csv.py
+
+# Calcular promedios por clase
+python operands_test_ink_density_avg.py
+
+# Generar mapas de calor de densidad promedio
+python ink_test_density_heatmaps.py
+
+# Calcular la matriz de distancias entre vectores promedio
+python operands_distance_matrix_test.py
+
+# Clasificar y analizar el conjunto de prueba
+python analyze_test_images.py
+```
+
+📌 **Nota:** Asegúrate de tener instaladas las dependencias necesarias ejecutando:
+
+```bash
+pip install -r src/requirements.txt
+```
+
+---
+
+## 📌 Conclusiones
+
+Esta sección presenta un resumen del desempeño del modelo a lo largo del proceso de clasificación y validación de operandos manuscritos. Se analizan tanto los resultados obtenidos en el conjunto de datos original como en el conjunto de prueba expandido, seguido de una reflexión sobre los aprendizajes clave y las posibles líneas de mejora futura.
+
+### ✅ Desempeño en el Conjunto de Datos Original
+
+El modelo basado en análisis por cuadrantes mostró un desempeño muy sólido sobre el conjunto de datos original extraído de la base de símbolos manuscritos. Con una **precisión global del 72.06%**, el sistema fue capaz de clasificar correctamente una amplia variedad de dígitos escritos a mano sin necesidad de técnicas avanzadas de aprendizaje automático.
+
+Las métricas por clase permitieron identificar con claridad cuáles dígitos presentaban mayores dificultades de reconocimiento (`5`, `7`, `8`) y cuáles se comportaban de manera más consistente (`1`, `2`, `6`, `0`). Estos resultados sentaron las bases para evaluar el potencial del modelo en condiciones más cercanas al uso real.
+
+### ✅ Validación en Conjunto de Datos Manuscrito
+
+Al evaluar el sistema con un **nuevo conjunto de imágenes manuscritas creadas específicamente** para simular condiciones reales, el modelo alcanzó una **precisión global del 91.80%**, lo que representa una mejora significativa respecto a la evaluación inicial.
+
+Este incremento en el rendimiento se explica por:
+- La estructura más controlada de las nuevas imágenes.
+- La mayor limpieza visual en los dígitos.
+- La consistencia del proceso de preprocesamiento y validación.
+
+El modelo demostró ser **estable, reproducible y efectivo** frente a datos no vistos, manteniendo altos valores de precisión y recall en casi todas las clases. Clases como `3`, `5` y `8` aún presentan cierto nivel de confusión, lo cual abre oportunidades para ajustes futuros.
+
+### 🔍 Puntos Clave y Mejoras Futuras
+
+1️⃣ **Robustez del modelo sin IA**  
+   - Se ha demostrado que el análisis basado en **distribución espacial de tinta y reglas de detección** es suficiente para clasificar correctamente operandos manuscritos.
+   - La estrategia funciona bien tanto en un conjunto de datos preexistente (Kaggle) como en uno generado manualmente.
+
+2️⃣ **Simplicidad y explicabilidad**  
+   - El sistema utiliza un enfoque simple y transparente, ideal para **entornos educativos o prototipos interpretables**.
+   - El uso de vectores de 9 dimensiones y distancias euclidianas facilita el análisis visual y la depuración.
+
+3️⃣ **Desempeño destacable en la mayoría de clases**  
+   - Dígitos como `0`, `2`, `6` y `9` mantienen un desempeño superior al 95% en métricas clave.
+   - Incluso en clases más difíciles, se observan mejoras con el conjunto manuscrito más controlado.
+
+4️⃣ **Oportunidades claras de mejora**  
+   - Incluir una etapa de **normalización más robusta** (rotación, centrado, escala).
+   - Aplicar técnicas de **aumento de datos** para mejorar la cobertura de casos difíciles.
+   - Explorar clasificadores **ligeros y no lineales** como KNN o SVM, manteniendo la interpretabilidad del sistema.
+
+5️⃣ **Reproducibilidad total**  
+   - Todos los procesos (extracción, procesamiento, clasificación y validación) han sido automatizados mediante scripts reutilizables, garantizando la **reproducibilidad del experimento**.
+
+### 🔹 Conclusión Final  
+
+Este estudio demuestra que es posible construir un **sistema efectivo y explicable de reconocimiento de operandos manuscritos** utilizando una metodología sencilla basada en grillas, análisis de densidad y reglas de distancia.  
+
+A pesar de su simplicidad, el enfoque propuesto logra **altas tasas de clasificación correcta** en contextos reales, lo que valida su aplicabilidad en escenarios donde se requiere interpretabilidad, bajo consumo computacional y facilidad de implementación.
+
+---
