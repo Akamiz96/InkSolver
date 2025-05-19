@@ -1,0 +1,6 @@
+📊 Evaluación general de resultados de ecuaciones
+---------------------------------------------------
+🔢 Total de ecuaciones evaluadas: 538
+✅ Correctas: 143
+❌ Incorrectas: 395
+🎯 Exactitud global: 26.58%
